@@ -1,7 +1,7 @@
 package com.epam.javauniversity.utils.array;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
+import com.epam.javauniversity.predicate.Predicate;
+
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -78,6 +78,16 @@ public final class ArrayUtils {
         }
         result += "}";
         return result;
+    }
+
+    public static int[] filter(final int[] array, Predicate predicate) {
+        if (isNull(array)) {
+            return null;
+        }
+        if (predicate == null) {
+            return array.clone();
+        }
+        return predicate.perform(array);
     }
 
     private static boolean isNull(final int[] array) {
