@@ -190,4 +190,15 @@ public class MatrixTest {
                                                     new int[]{3, 5, 6}});
         Assert.assertFalse(matrix.isEqually(otherMatrix));
     }
+
+    @Test
+    public void cloneTestCloneTrue() throws CloneNotSupportedException {
+        Assert.assertNotEquals(matrix.clone(), matrix);
+    }
+
+    @Test
+     public void cloneTestCloneFalse() throws CloneNotSupportedException {
+        Matrix otherMatrix = matrix;
+        Assert.assertEquals(otherMatrix, matrix);
+    }
 }

@@ -1,5 +1,8 @@
 package com.epam.javauniversity.utils.array;
 
+import com.epam.javauniversity.predicate.MoreHundred;
+import com.epam.javauniversity.predicate.MultipleOfNine;
+import com.epam.javauniversity.predicate.Parity;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -100,5 +103,40 @@ public class ArrayUtilsTest {
     @Test
     public void printTestOrdinary() throws Exception {
         Assert.assertTrue(ArrayUtils.print(new int[]{1, 2, 3}).equals("{1(0) -- 2(1) -- 3(2)}"));
+    }
+
+    @Test
+    public void filterTestArrayIsNullAnyPredicate() {
+        Assert.assertNull(ArrayUtils.filter(null, new Parity()));
+    }
+
+    @Test
+    public void filterTestPredicateIsParity() {
+        Assert.assertTrue(ArrayUtils.compareWithoutOrder(new int[]{2, 4},
+                                                ArrayUtils.filter(new int[]{1, 2, 3, 4}, new Parity())));
+    }
+
+    @Test
+    public void filterTestPredicateIsMoreHundred() {
+        Assert.assertTrue(ArrayUtils.compareWithoutOrder(new int[]{102, 104},
+                ArrayUtils.filter(new int[]{1, 102, 93, 104}, new MoreHundred())));
+    }
+
+    @Test
+    public void filterTestPredicateIsMultipleOfNine() {
+        Assert.assertTrue(ArrayUtils.compareWithoutOrder(new int[]{9, 99},
+                ArrayUtils.filter(new int[]{7, 9, 19, 99}, new MultipleOfNine())));
+    }
+
+    @Test
+    public void filterTestPredicateIsNull() {
+        Assert.assertTrue(ArrayUtils.compareWithoutOrder(new int[]{1, 2, 3, 4},
+                                                ArrayUtils.filter(new int[]{1, 2, 3, 4}, null)));
+    }
+
+    @Test
+    public void filterTestEmptyArrayAnyPredicate() {
+        Assert.assertTrue(ArrayUtils.compareWithoutOrder(new int[]{},
+                                                ArrayUtils.filter(new int[]{}, new MultipleOfNine())));
     }
 }

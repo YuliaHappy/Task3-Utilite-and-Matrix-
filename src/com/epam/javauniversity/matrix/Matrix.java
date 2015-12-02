@@ -1,6 +1,6 @@
 package com.epam.javauniversity.matrix;
 
-public class Matrix {
+public class Matrix implements Cloneable{
 
     private int[][] matrix;
 
@@ -35,6 +35,11 @@ public class Matrix {
                 this.matrix[i][j] = matrix[i][j];
             }
         }
+    }
+
+    @Override
+    protected Matrix clone() throws CloneNotSupportedException {
+        return (Matrix) super.clone();
     }
 
     public int rowCount() {
