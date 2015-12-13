@@ -58,7 +58,7 @@ public class MatrixTest {
     public void setItemTestMatrixIsEmpty() throws Exception {
         Matrix matrixEmpty = new Matrix(0, 0);
         matrixEmpty.setItem(1, 1, -5);
-        Assert.assertTrue(matrixEmpty.isEqually(new Matrix(0, 0)));
+        Assert.assertTrue(matrixEmpty.equal(new Matrix(0, 0)));
     }
 
     @Test
@@ -72,25 +72,25 @@ public class MatrixTest {
         Matrix matrixNew = new Matrix(new int[][]{new int[]{1, 2, 3},
                                                   new int[]{4, 5, 6}});
         matrixNew.setItem(5, 1, -5);
-        Assert.assertTrue(matrix.isEqually(matrixNew));
+        Assert.assertTrue(matrix.equal(matrixNew));
     }
 
     @Test
     public void additionTestAddsMatrixIsNull() throws Exception {
         Matrix addsMatrix = null;
-        Assert.assertNull(matrix.addition(addsMatrix));
+        Assert.assertNull(matrix.doAddition(addsMatrix));
     }
 
     @Test
     public void additionTestAddsMatrixEmpty() throws Exception {
         Matrix addsMatrix = new Matrix(0, 0);
-        Assert.assertNull(matrix.addition(addsMatrix));
+        Assert.assertNull(matrix.doAddition(addsMatrix));
     }
 
     @Test
     public void additionTestThisMatrixEmpty() throws Exception {
         Matrix emptyMatrix = new Matrix(0, 0);
-        Assert.assertNull(emptyMatrix.addition(matrix));
+        Assert.assertNull(emptyMatrix.doAddition(matrix));
     }
 
     @Test
@@ -98,16 +98,16 @@ public class MatrixTest {
         Matrix addsMatrix = new Matrix(new int[][]{new int[]{1, 2, 3},
                                                    new int[]{4, 5, 6},
                                                    new int[]{7, 8, 9}});
-        Assert.assertNull(matrix.addition(addsMatrix));
+        Assert.assertNull(matrix.doAddition(addsMatrix));
     }
 
     @Test
     public void additionTestOrdinary() throws Exception {
         Matrix addsMatrix = new Matrix(new int[][]{new int[]{1, 1, 1},
                                                    new int[]{1, 1, 1}});
-        Assert.assertTrue(matrix.addition(addsMatrix).isEqually(new Matrix(new int[][]{
-                                                   new int[]{2, 3, 4},
-                                                   new int[]{5, 6, 7}})));
+        Assert.assertTrue(matrix.doAddition(addsMatrix).equal(new Matrix(new int[][]{
+                new int[]{2, 3, 4},
+                new int[]{5, 6, 7}})));
     }
 
     @Test
@@ -140,9 +140,9 @@ public class MatrixTest {
         Matrix multipliedMatrix = new Matrix(new int[][]{new int[]{1, 1, 1},
                                                          new int[]{1, 1, 1},
                                                          new int[]{1, 1, 1}});
-        Assert.assertTrue(matrix.multiplication(multipliedMatrix).isEqually(new Matrix(new int[][]{
-                                                         new int[]{6, 6, 6},
-                                                         new int[]{15, 15, 15}})));
+        Assert.assertTrue(matrix.multiplication(multipliedMatrix).equal(new Matrix(new int[][]{
+                new int[]{6, 6, 6},
+                new int[]{15, 15, 15}})));
     }
 
     @Test
@@ -168,26 +168,26 @@ public class MatrixTest {
     public void isEquallyTestMatrixEmpty() throws Exception {
         Matrix firstMatrix = new Matrix(0, 0);
         Matrix secondMatrix = new Matrix(0, 0);
-        Assert.assertTrue(firstMatrix.isEqually(secondMatrix));
+        Assert.assertTrue(firstMatrix.equal(secondMatrix));
     }
 
     @Test
     public void isEquallyTestDimensionIsNotEqually() throws Exception {
         Matrix otherMatrix = new Matrix(new int[][]{new int[]{1, 2}});
-        Assert.assertFalse(matrix.isEqually(otherMatrix));
+        Assert.assertFalse(matrix.equal(otherMatrix));
     }
 
     @Test
     public void isEquallyTestEquallyMatrix() throws Exception {
         Matrix otherMatrix = new Matrix(new int[][]{new int[]{1, 2, 3},
                                                     new int[]{4, 5, 6}});
-        Assert.assertTrue(matrix.isEqually(otherMatrix));
+        Assert.assertTrue(matrix.equal(otherMatrix));
     }
 
     @Test
     public void isEquallyTestNotEquallyMatrix() throws Exception {
         Matrix otherMatrix = new Matrix(new int[][]{new int[]{1, 2, 3},
                                                     new int[]{3, 5, 6}});
-        Assert.assertFalse(matrix.isEqually(otherMatrix));
+        Assert.assertFalse(matrix.equal(otherMatrix));
     }
 }

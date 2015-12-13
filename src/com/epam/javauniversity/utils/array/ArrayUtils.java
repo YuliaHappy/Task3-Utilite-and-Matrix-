@@ -1,7 +1,5 @@
 package com.epam.javauniversity.utils.array;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -55,13 +53,12 @@ public final class ArrayUtils {
             return null;
         }
         int[] copy = array.clone();
-        int index, temp;
         Random random = ThreadLocalRandom.current();
         for (int i = copy.length - 1; i > 0; i--) {
-            index = random.nextInt(i);
-            temp = copy[i];
+            int index = random.nextInt(i);
+            int item = copy[i];
             copy[i] = copy[index];
-            copy[index] = temp;
+            copy[index] = item;
         }
         return copy;
     }
