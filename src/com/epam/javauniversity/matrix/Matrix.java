@@ -3,33 +3,31 @@ package com.epam.javauniversity.matrix;
 public class Matrix {
 
     private int[][] matrix;
-
-    private int row;
-
-    private int column;
+    private int rowCount;
+    private int columnCount;
 
     public Matrix(int rowCount, int columnCount) {
-        if (row < 0 || column < 0) {
-            this.row = -1;
-            this.column = -1;
+        if (this.rowCount < 0 || columnCount < 0) {
+            this.rowCount = -1;
+            this.columnCount = -1;
             this.matrix = null;
             return;
         }
-        this.row = rowCount;
-        this.column = columnCount;
-        matrix = new int[this.row][this.column];
+        this.rowCount = rowCount;
+        this.columnCount = columnCount;
+        matrix = new int[this.rowCount][this.columnCount];
     }
 
     public Matrix(final int[][] matrix) {
-        if (!isMatrix(matrix)) {
-            this.row = -1;
-            this.column = -1;
+        if (!isCorrectMatrix(matrix)) {
+            this.rowCount = -1;
+            this.columnCount = -1;
             this.matrix = null;
             return;
         }
-        this.row = matrix.length;
-        this.column = matrix[0].length;
-        this.matrix = new int[this.row][this.column];
+        this.rowCount = matrix.length;
+        this.columnCount = matrix[0].length;
+        this.matrix = new int[this.rowCount][this.columnCount];
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
                 this.matrix[i][j] = matrix[i][j];
@@ -38,11 +36,11 @@ public class Matrix {
     }
 
     public int rowCount() {
-        return row;
+        return rowCount;
     }
 
     public int columnCount() {
-        return column;
+        return columnCount;
     }
 
     public int item(final int row, final int column) {
@@ -59,13 +57,13 @@ public class Matrix {
         matrix[row][column] = value;
     }
 
-    public Matrix addition(final Matrix matrix) {
-        if (matrix == null || !isMatrix(matrix.matrix) || !isMatrix(this.matrix) || matrix.rowCount() != row || matrix.columnCount() != column) {
+    public Matrix doAddition(final Matrix matrix) {
+        if (matrix == null || !isCorrectMatrix(matrix.matrix) || !isCorrectMatrix(this.matrix) || matrix.rowCount() != rowCount || matrix.columnCount() != columnCount) {
             return null;
         }
-        Matrix result = new Matrix(row, column);
-        for (int row = 0; row < this.row ; row++) {
-            for (int column = 0; column < this.column; column++) {
+        Matrix result = new Matrix(rowCount, columnCount);
+        for (int row = 0; row < this.rowCount; row++) {
+            for (int column = 0; column < this.columnCount; column++) {
                 result.setItem(row, column, matrix.item(row, column) + this.matrix[row][column]);
             }
         }
@@ -73,13 +71,13 @@ public class Matrix {
     }
 
     public Matrix multiplication(final Matrix matrix) {
-        if (matrix == null || !isMatrix(matrix.matrix) || !isMatrix(this.matrix) || this.column != matrix.rowCount() ) {
+        if (matrix == null || !isCorrectMatrix(matrix.matrix) || !isCorrectMatrix(this.matrix) || this.columnCount != matrix.rowCount() ) {
             return null;
         }
-        Matrix result = new Matrix(row, column);
-        for (int row = 0; row < this.row ; row++) {
-            for (int column = 0; column < this.column; column++) {
-                for (int r = 0; r < this.column; r++) {
+        Matrix result = new Matrix(rowCount, columnCount);
+        for (int row = 0; row < this.rowCount; row++) {
+            for (int column = 0; column < this.columnCount; column++) {
+                for (int r = 0; r < this.columnCount; r++) {
                     result.setItem(row, column, result.item(row, column) + matrix.item(r, column) * this.matrix[row][r]);
                 }
             }
@@ -88,19 +86,19 @@ public class Matrix {
     }
 
     public int determinant() {
-        if (!isMatrix(matrix) || !isSquare(matrix)) {
+        if (!isCorrectMatrix(matrix) || !isSquare(matrix)) {
             return 0;
         }
         return minor(matrix);
     }
 
-    public boolean isEqually(Matrix matrix) {
-        if(row == 0 && matrix.rowCount() == 0) {
+    public boolean equal(Matrix matrix) {
+        if(rowCount == 0 && matrix.rowCount() == 0) {
             return true;
         }
-        if (this.row == matrix.rowCount() && this.column == matrix.columnCount()) {
-            for (int row = 0; row < this.row; row++) {
-                for (int column = 0; column < this.column; column++) {
+        if (this.rowCount == matrix.rowCount() && this.columnCount == matrix.columnCount()) {
+            for (int row = 0; row < this.rowCount; row++) {
+                for (int column = 0; column < this.columnCount; column++) {
                     if (this.matrix[row][column] != matrix.item(row, column)) {
                         return false;
                     }
@@ -111,6 +109,11 @@ public class Matrix {
         return false;
     }
 
+    /**
+     * Рекурсивный метод для поиска детерминанта матрицы, путем разложения по строке с использованием дополнительных миноров
+     * @param matrix - подматрица, которая раскладывается на данном шаге
+     * @return
+     */
     private int minor(int [][] matrix) {
         int result = 0;
         if (matrix.length == 1) {
@@ -132,17 +135,8 @@ public class Matrix {
         return result;
     }
 
-    private boolean isMatrix(final int[][] matrix) {
-        return (matrix != null && !includeEmptyRow(matrix) && !includeNullRow(matrix) && isRectangular(matrix));
-    }
-
-    private boolean includeNullRow(final int[][] matrix) {
-        for (int[] row : matrix) {
-            if (row == null) {
-                return true;
-            }
-        }
-        return false;
+    private boolean isCorrectMatrix(final int[][] matrix) {
+        return (matrix != null && !includeEmptyRow(matrix) && isRectangular(matrix));
     }
 
     private boolean includeEmptyRow(final int[][] matrix) {
@@ -167,7 +161,7 @@ public class Matrix {
     }
 
     private boolean isValidIndex(final int row, final int column) {
-        return (row < this.row && row >= 0 && column < this.column && column >= 0);
+        return (row < this.rowCount && row >= 0 && column < this.columnCount && column >= 0);
     }
 
     private boolean isSquare(final int[][] matrix) {
