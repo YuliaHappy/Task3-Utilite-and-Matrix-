@@ -87,7 +87,15 @@ public final class ArrayUtils {
         if (predicate == null) {
             return array.clone();
         }
-        return predicate.perform(array);
+
+        int[] result = new int[0];
+        for (int item : array) {
+            if (predicate.perform(item)) {
+                result = ArrayUtils.changeDimension(result, 1);
+                result[result.length - 1] = item;
+            }
+        }
+        return result;
     }
 
     private static boolean isNull(final int[] array) {

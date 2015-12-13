@@ -3,9 +3,7 @@ package com.epam.javauniversity.matrix;
 public class Matrix implements Cloneable{
 
     private int[][] matrix;
-
     private int row;
-
     private int column;
 
     public Matrix(int rowCount, int columnCount) {
@@ -39,7 +37,13 @@ public class Matrix implements Cloneable{
 
     @Override
     protected Matrix clone() throws CloneNotSupportedException {
-        return (Matrix) super.clone();
+        int [][] copyMatrix = new int[matrix.length][matrix[0].length];
+        for (int row = 0; row < matrix.length; row++) {
+            for (int column = 0; column < matrix[0].length; column++) {
+                copyMatrix[row][column] = matrix[row][column];
+            }
+        }
+        return new Matrix(copyMatrix);
     }
 
     public int rowCount() {
