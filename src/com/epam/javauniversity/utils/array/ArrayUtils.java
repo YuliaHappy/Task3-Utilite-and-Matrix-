@@ -19,7 +19,7 @@ public final class ArrayUtils {
      */
     public static int[] changeDimension(final int[] array, final int length) {
         if (isNull(array)) {
-            return null;
+            throw new IllegalArgumentException("Array is null");
         }
         int[] copy = array.clone();
         int resultLength = (array.length < -1*length) ? 0 : array.length + length;
@@ -29,14 +29,11 @@ public final class ArrayUtils {
     }
 
     public static boolean compareWithoutOrder(final int[] left, final int[] right) {
-        if ((isNull(left) && !isNull(right)) || (!isNull(left) && isNull(right))) {
-            return false;
-        }
-        if (isNull(left) && isNull(right)) {
-            return true;
+        if ((isNull(left) && !isNull(right)) || (!isNull(left) && isNull(right)) || (isNull(left) && isNull(right))) {
+            throw new IllegalArgumentException("Argument is null");
         }
         if (left.length != right.length) {
-            return false;
+            throw new IllegalArgumentException("Length arguments isn't equally");
         }
         int[] copyLeft = left.clone();
         int[] copyRight = right.clone();
@@ -52,7 +49,7 @@ public final class ArrayUtils {
 
     public static int[] shuffle(final int[] array) {
         if (isNull(array)) {
-            return null;
+            throw new IllegalArgumentException("Array is null");
         }
         int[] copy = array.clone();
         int index, temp;
@@ -82,7 +79,7 @@ public final class ArrayUtils {
 
     public static int[] filter(final int[] array, Predicate predicate) {
         if (isNull(array)) {
-            return null;
+            throw new IllegalArgumentException("Array is null");
         }
         if (predicate == null) {
             return array.clone();
