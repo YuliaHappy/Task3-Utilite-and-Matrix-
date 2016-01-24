@@ -42,22 +42,42 @@ public class ArrayUtilsTest {
 
     @Test
     public void changeDimensionTestArrayIsNull() throws Exception {
-        Assert.assertNull(ArrayUtils.changeDimension(null, 2));
+        try {
+            ArrayUtils.changeDimension(null, 2);
+            Assert.assertFalse(true);
+        } catch(IllegalArgumentException e) {
+            Assert.assertTrue(true);
+        }
     }
 
     @Test
     public void compareWithoutOrderTestOneArrayIsNull() throws Exception {
-        Assert.assertFalse(ArrayUtils.compareWithoutOrder(null, new int[]{}));
+        try {
+            ArrayUtils.compareWithoutOrder(null, new int[]{});
+            Assert.assertFalse(true);
+        } catch (IllegalArgumentException e) {
+            Assert.assertTrue(true);
+        }
     }
 
     @Test
     public void compareWithoutOrderTestArraysIsNull() throws Exception {
-        Assert.assertTrue(ArrayUtils.compareWithoutOrder(null, null));
+        try {
+            ArrayUtils.compareWithoutOrder(null, null);
+            Assert.assertFalse(true);
+        } catch(IllegalArgumentException e) {
+            Assert.assertTrue(true);
+        }
     }
 
     @Test
     public void compareWithoutOrderTestNotEqualLength() throws Exception {
-        Assert.assertFalse(ArrayUtils.compareWithoutOrder(new int[]{1, 2}, new int[]{1, 2, 3}));
+        try {
+            ArrayUtils.compareWithoutOrder(new int[]{1, 2}, new int[]{1, 2, 3});
+            Assert.assertFalse(true);
+        } catch (IllegalArgumentException e) {
+            Assert.assertTrue(true);
+        }
     }
 
     @Test
@@ -72,12 +92,22 @@ public class ArrayUtilsTest {
 
     @Test
     public void compareWithoutOrderTestNotEqualWithoutOrder() throws Exception {
-        Assert.assertFalse(ArrayUtils.compareWithoutOrder(new int[] {1, 2, 3}, new int[]{3, 2, 4}));
+        try {
+            ArrayUtils.compareWithoutOrder(new int[]{1, 2, 3}, new int[]{3, 2, 4});
+            Assert.assertFalse(true);
+        } catch (IllegalArgumentException e) {
+            Assert.assertTrue(true);
+        }
     }
 
     @Test
     public void shuffleTestArrayIsNull() throws Exception {
-        Assert.assertNull(ArrayUtils.shuffle(null));
+        try {
+            ArrayUtils.shuffle(null);
+            Assert.assertFalse(true);
+        } catch (IllegalArgumentException e) {
+            Assert.assertTrue(true);
+        }
     }
 
     @Test
@@ -102,12 +132,22 @@ public class ArrayUtilsTest {
 
     @Test
     public void printTestOrdinary() throws Exception {
-        Assert.assertTrue(ArrayUtils.print(new int[]{1, 2, 3}).equals("{1(0) -- 2(1) -- 3(2)}"));
+        try {
+            ArrayUtils.print(new int[]{1, 2, 3}).equals("{1(0) -- 2(1) -- 3(2)}");
+            Assert.assertFalse(true);
+        } catch(IllegalArgumentException e) {
+            Assert.assertTrue(true);
+        }
     }
 
     @Test
     public void filterTestArrayIsNullAnyPredicate() {
-        Assert.assertNull(ArrayUtils.filter(null, new Parity()));
+        try {
+            ArrayUtils.filter(null, new Parity());
+            Assert.assertFalse(true);
+        } catch (IllegalArgumentException e) {
+            Assert.assertTrue(true);
+        }
     }
 
     @Test
